@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 from altair import settings
-from realty.views import CityView, ImageView, FlatView, DeveloperView, SubjectOfLawView, WallMaterialView, RecordView
+from realty.views import CityView, FlatTypeView, DeveloperView, WallMaterialView, FlatView
 
 urlpatterns = [
     path('admin/', admin.site.urls),

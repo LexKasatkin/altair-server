@@ -4,9 +4,9 @@ from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from realty.models import City, District, Flat, Developer, Record, Image, SubjectOfLaw, WallMaterial
-from realty.serializer import CitySerializer, DistrictSerializer, ImageSerializer, FlatSerializer, \
-    SubjectOfLawSerializer, WallMaterialSerializer, DeveloperSerializer, RecordSerializer
+from realty.models import City, District, FlatType, Developer, Flat, WallMaterial
+from realty.serializer import CitySerializer, DistrictSerializer, FlatTypeSerializer, \
+    WallMaterialSerializer, DeveloperSerializer, FlatSerializer
 
 
 class CityView(APIView):
@@ -23,18 +23,11 @@ class DistrictView(APIView):
         return Response({"districts": serializer.data})
 
 
-class ImageView(APIView):
+class FlatTypeView(APIView):
     def get(self, request):
-        images = Image.objects.all()
-        serializer = ImageSerializer(images, many=True)
-        return Response({"images": serializer.data})
-
-
-class FlatView(APIView):
-    def get(self, request):
-        flats = Flat.objects.all()
+        flat_types = FlatType.objects.all()
         serializer = FlatSerializer(flats, many=True)
-        return Response({"flats": serializer.data})
+        return Response({"flat_types": serializer.data})
 
 
 class DeveloperView(APIView):
@@ -44,13 +37,6 @@ class DeveloperView(APIView):
         return Response({"developers": serializer.data})
 
 
-class SubjectOfLawView(APIView):
-    def get(self, request):
-        subjectsOfLaw = SubjectOfLaw.objects.all()
-        serializer = SubjectOfLawSerializer(subjectsOfLaw, many=True)
-        return Response({"subjectsOfLaw": serializer.data})
-
-
 class WallMaterialView(APIView):
     def get(self, request):
         wall_materials = WallMaterial.objects.all()
@@ -58,8 +44,8 @@ class WallMaterialView(APIView):
         return Response({"wall_materials": serializer.data})
 
 
-class RecordView(APIView):
+class FlatView(APIView):
     def get(self, request):
-        records = Record.objects.all()
-        serializer = RecordSerializer(records, many=True)
+        flats = Flat.objects.all()
+        serializer = FlatSerializer(flats, many=True)
         return Response({"records": serializer.data})
