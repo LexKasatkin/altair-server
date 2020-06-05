@@ -26,7 +26,7 @@ class DistrictView(APIView):
 class FlatTypeView(APIView):
     def get(self, request):
         flat_types = FlatType.objects.all()
-        serializer = FlatSerializer(flats, many=True)
+        serializer = FlatTypeSerializer(flat_types, many=True)
         return Response({"flat_types": serializer.data})
 
 

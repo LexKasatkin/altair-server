@@ -48,7 +48,7 @@ class Flat(models.Model):
     def choices(cls):
         return tuple((i.name, i.value) for i in cls)
 
-    subjects_of_law = models.CharField(max_length=30,
+    subject_of_law = models.CharField(max_length=30,
                             choices=SubjectsOfLawChoices.choices,
                             default=SubjectsOfLawChoices.Entity)
     description = models.TextField()
@@ -60,7 +60,7 @@ class Flat(models.Model):
     cost = models.IntegerField()
     square = models.FloatField()
     deadline = models.TextField()
-    photo = models.ImageField(upload_to='img',  max_length=254)
+    photo = models.ImageField(upload_to='img',  max_length=None)
 
     def __str__(self):
         return '%s %d %s' % (self.developer.name, self.square, self.district.name)
