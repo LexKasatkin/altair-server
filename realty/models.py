@@ -6,22 +6,37 @@ from django.db import models
 class City(models.Model):
     name = models.CharField(max_length=60)
 
+    def __str__(self):
+        return self.name
+
 
 class District(models.Model):
     name = models.CharField(max_length=60)
 
+    def __str__(self):
+        return self.name
+
 
 class Image(models.Model):
     name = models.CharField(max_length=60)
+
+    def __str__(self):
+        return self.name
 
 
 class Flat(models.Model):
     name = models.CharField(max_length=60)
     full_name = models.CharField(max_length=60)
 
+    def __str__(self):
+        return self.name
+
 
 class Developer(models.Model):
     name = models.CharField(max_length=60)
+
+    def __str__(self):
+        return self.name
 
 
 class SubjectOfLaw(models.Model):
@@ -37,9 +52,15 @@ class SubjectOfLaw(models.Model):
                             choices=SubjectsOfLawChoices.choices,
                             default=SubjectsOfLawChoices.Entity)
 
+    def __str__(self):
+        return self.name
+
 
 class WallMaterial(models.Model):
     name = models.CharField(max_length=60)
+
+    def __str__(self):
+        return self.name
 
 
 class Record(models.Model):
@@ -54,3 +75,6 @@ class Record(models.Model):
     cost = models.IntegerField()
     square = models.FloatField()
     deadline = models.TextField()
+
+    def __str__(self):
+        return '${self.district.name} ${self.city.name}'

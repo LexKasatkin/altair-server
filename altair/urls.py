@@ -18,10 +18,12 @@ from django.contrib import admin
 from django.urls import path, include
 
 from altair import settings
+from realty.views import CityView, ImageView, FlatView, DeveloperView, SubjectOfLawView, WallMaterialView, RecordView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
+    path('api/', include('realty.urls')),
 ]
 
 if settings.DEBUG:
