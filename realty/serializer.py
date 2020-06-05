@@ -34,5 +34,5 @@ class FlatSerializer(serializers.Serializer):
     cost = serializers.IntegerField()
     square = serializers.IntegerField()
     deadline = serializers.CharField(max_length=60)
-    photo = serializers.ImageField(max_length=None, use_url=True)
+    photo = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=True)
 
