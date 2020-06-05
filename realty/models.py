@@ -51,7 +51,7 @@ class Flat(models.Model):
     subject_of_law = models.CharField(max_length=30,
                             choices=SubjectsOfLawChoices.choices,
                             default=SubjectsOfLawChoices.Entity)
-    description = models.TextField()
+    description = models.TextField(blank=True)
     wall_material = models.ForeignKey('WallMaterial', related_name='wall_materials', on_delete=models.CASCADE)
     city = models.ForeignKey('City', related_name='cities', on_delete=models.CASCADE)
     district = models.ForeignKey('District', related_name='districts', on_delete=models.CASCADE)
@@ -60,7 +60,7 @@ class Flat(models.Model):
     cost = models.IntegerField()
     square = models.FloatField()
     deadline = models.TextField()
-    photo = models.ImageField(upload_to='img',  max_length=None)
+    photo = models.ImageField(upload_to='img',  max_length=None, blank=True)
 
     def __str__(self):
         return '%s %d %s' % (self.developer.name, self.square, self.district.name)
