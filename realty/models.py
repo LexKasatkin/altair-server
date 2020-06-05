@@ -19,7 +19,6 @@ class District(models.Model):
 
 class FlatType(models.Model):
     name = models.CharField(max_length=60)
-    full_name = models.CharField(max_length=60)
 
     def __str__(self):
         return self.name

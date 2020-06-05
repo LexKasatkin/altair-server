@@ -24,12 +24,15 @@ class WallMaterialSerializer(serializers.Serializer):
 
 
 class FlatSerializer(serializers.Serializer):
-    name = serializers.CharField(max_length=60)
+    subject_of_law = serializers.CharField(max_length=30)
     description = serializers.CharField()
+    wall_material = serializers.CharField(max_length=60)
+    city = serializers.CharField(max_length=60)
+    district = serializers.CharField(max_length=60)
+    flat_type = serializers.CharField(max_length=60)
+    developer = serializers.CharField(max_length=60)
     cost = serializers.IntegerField()
     square = serializers.IntegerField()
-    flat_type = serializers.CharField(max_length=30)
-    deadline = serializers.CharField(max_length=30)
-    subject_of_law = serializers.CharField(max_length=30)
+    deadline = serializers.CharField(max_length=60)
     photo = serializers.SerializerMethodField()
 
