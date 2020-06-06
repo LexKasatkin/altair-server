@@ -38,6 +38,13 @@ class WallMaterial(models.Model):
         return self.name
 
 
+class RealtyType(models.Model):
+    name = models.CharField(max_length=60)
+
+    def __str__(self):
+        return self.name
+
+
 class Flat(models.Model):
 
     class SubjectsOfLawChoices(models.TextChoices):
@@ -58,9 +65,11 @@ class Flat(models.Model):
     flat_type = models.ForeignKey('FlatType', related_name='flat_types', on_delete=models.CASCADE)
     developer = models.ForeignKey('Developer', related_name='developers', on_delete=models.CASCADE)
     cost = models.IntegerField()
+    realty_type = models.ForeignKey('RealtyType', related_name='realty_types', on_delete=models.CASCADE)
     square = models.FloatField()
     deadline = models.TextField()
     photo = models.ImageField(upload_to='img',  max_length=None, blank=True)
+    address = models.TextField()
 
     def __str__(self):
         return '%s %d %s' % (self.developer.name, self.square, self.district.name)
