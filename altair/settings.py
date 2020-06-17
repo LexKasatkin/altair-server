@@ -133,11 +133,19 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 
 MEDIA_URL='/media/'
 MEDIA_ROOT=os.path.join(BASE_DIR, 'media')
 
 CORS_ORIGIN_WHITELIST = [
-    "http://localhost:8080",
-    "http://127.0.0.1:8080"
-]
+    "https//ainvest24.ru",
+    "https://ainvest24.xyz",
+    "https://localhost:8080",
+    "https://127.0.0.1:8080",]
+
+ALLOWED_HOSTS = [
+    "ainvest24.ru",
+    "ainvest24.xyz",
+    "localhost:8080",]
+                                                              151,20        Bot
