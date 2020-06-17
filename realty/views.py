@@ -97,3 +97,9 @@ class AlbumView(APIView):
         serializer_class = AlbumSerializer
         filter_backends = (DjangoFilterBackend,)
         filterset_class = AlbumFilter
+
+
+class FlatDetailsView(APIView):
+    def get(self):
+        queryset = Flat.objects.all()
+        serializer_class = FlatSerializer

@@ -10,7 +10,7 @@ class FlatResource(resources.ModelResource):
 
     class Meta:
         model = Flat
-        fields = ('address', 'subject_of_law', 'description', 'wall_material', 'city',
-                  'district','flat_type','developer','cost','square', 'deadline')
-        export_order = ('address', 'district', 'flat_type', 'square', 'subject_of_law',
-                  'wall_material','cost','developer','deadline','description')
+        fields = ('street', 'subject_of_law', 'description', 'wall_material',
+                'flat_type','developer','cost','square')
+        export_order = ('street', 'flat_type', 'square', 'subject_of_law',
+                  'wall_material','cost','developer','description')

@@ -1,15 +1,17 @@
 from rest_framework import serializers
-from .models import Album
+from .models import Album, Street, District, Flat, City
 
-class CitySerializer(serializers.Serializer):
-    id = serializers.IntegerField(label='ID', read_only=True)
-    name = serializers.CharField(max_length=60)
+class CitySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = City
+        fields = '__all__'
 
 
-class DistrictSerializer(serializers.Serializer):
-    id = serializers.IntegerField(label='ID', read_only=True)
-    name = serializers.CharField(max_length=60)
-    city = serializers.CharField(max_length=60)
+class DistrictSerializer(serializers.ModelSerializer):
+    city = CitySerializer(read_only=True)
+    class Meta:
+        model = District
+        fields = '__all__'
 
 
 class FlatTypeSerializer(serializers.Serializer):
@@ -32,10 +34,11 @@ class RealtyTypeSerializer(serializers.Serializer):
     name = serializers.CharField(max_length=60)
 
 
-class StreetSerializer(serializers.Serializer):
-    id = serializers.IntegerField(label='ID', read_only=True)
-    district = serializers.CharField(max_length=60)
-    name = serializers.CharField(max_length=60)
+class StreetSerializer(serializers.ModelSerializer):
+    district = DistrictSerializer(read_only=True)
+    class Meta:
+        model = Street
+        fields = '__all__'
 
 
 class ImageSerializer(serializers.Serializer):
@@ -54,23 +57,9 @@ class ResidentialComplexSerializer(serializers.Serializer):
     name = serializers.CharField(max_length=100)
 
 
-class FlatSerializer(serializers.Serializer):
-    id = serializers.IntegerField(label='ID', read_only=True)
-    subject_of_law = serializers.CharField(max_length=30)
-    year_of_completion = serializers.IntegerField()
-    quarter = serializers.CharField(max_length=30)
-    street = serializers.CharField(max_length=60)
-    house = serializers.CharField(max_length=30)
-    flat = serializers.CharField(max_length=30)
-    description = serializers.CharField()
-    wall_material = serializers.CharField(max_length=60)
-    flat_type = serializers.CharField(max_length=60)
-    realty_type = serializers.CharField(max_length=60)
-    developer = serializers.CharField(max_length=60)
-    cost = serializers.IntegerField()
-    square = serializers.FloatField()
-    main_image = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=True)
-    layout = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=True)
-    residential_complex = serializers.CharField(max_length=60)
-    latitude = serializers.FloatField()
-    longitude = serializers.FloatField()
+class FlatSerializer(serializers.ModelSerializer):
+    street = StreetSerializer(read_only=True)
+
+    class Meta:
+        model = Flat
+        fields = '__all__'

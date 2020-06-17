@@ -1,7 +1,7 @@
 from django.urls import path
 
 from realty.views import DistrictView, CityView, RealtyTypeView, FlatTypeView, DeveloperView, WallMaterialView, \
-    FlatListView, StreetView, ResidentialComplexView, ImageView, AlbumView
+    FlatListView, StreetView, ResidentialComplexView, ImageView, AlbumView, FlatDetailsView
 
 app_name = "realty"
 # app_name will help us do a reverse look-up latter.
@@ -17,4 +17,5 @@ urlpatterns = [
     path('residential-complexes/', ResidentialComplexView.as_view()),
     path('streets/', StreetView.as_view()),
     path('albums/', AlbumView.as_view()),
+    path('flat-details/', FlatDetailsView.as_view()),
 ]
