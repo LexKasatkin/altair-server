@@ -70,6 +70,7 @@ class FlatSerializer(serializers.Serializer):
     cost = serializers.IntegerField()
     square = serializers.FloatField()
     main_image = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=True)
+    layout = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=True)
     residential_complex = serializers.CharField(max_length=60)
     latitude = serializers.FloatField()
     longitude = serializers.FloatField()
