@@ -5,13 +5,13 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import generics
-from .filter import FlatFilter
+from .filter import FlatFilter, FlatImageFilter
 
 from realty.models import City, District, RealtyType, FlatType, Developer, Flat, \
-    WallMaterial, Street, Image, ResidentialComplex
+    WallMaterial, Street, Image, ResidentialComplex, FlatImage
 from realty.serializer import CitySerializer, RealtyTypeSerializer, DistrictSerializer, FlatTypeSerializer, \
     WallMaterialSerializer, DeveloperSerializer, FlatSerializer, StreetSerializer, ResidentialComplexSerializer, \
-    ImageSerializer
+    ImageSerializer, FlatImageSerializer
 
 
 class FlatListView(generics.ListAPIView):
@@ -19,6 +19,7 @@ class FlatListView(generics.ListAPIView):
    serializer_class = FlatSerializer
    filter_backends = (DjangoFilterBackend,)
    filterset_class = FlatFilter
+
 
 class CityView(APIView):
     def get(self, request):
@@ -88,3 +89,16 @@ class ImageView(APIView):
         images = Image.objects.all()
         serializer = ImageSerializer(images, many=True)
         return Response({"images": serializer.data})
+
+
+class FlatImageView(APIView):
+    def get(self, request):
+        flat_images = FlatImage.objects.all()
+        serializer = FlatImageSerializer(flat_images, many=True)
+        return Response({"flat_images": serializer.data})
+
+class FlatImageListView(generics.ListAPIView):
+   queryset = FlatImage.objects.all()
+   serializer_class = FlatImageSerializer
+   filter_backends = (DjangoFilterBackend,)
+   filterset_class = FlatImageFilter

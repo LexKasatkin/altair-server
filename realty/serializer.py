@@ -45,6 +45,12 @@ class ImageSerializer(serializers.Serializer):
     image = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=True)
 
 
+class FlatImageSerializer(serializers.Serializer):
+    id = serializers.IntegerField(label='ID', read_only=True)
+    image = serializers.CharField(max_length=60)
+    flat = serializers.CharField(max_length=60)
+
+
 class ResidentialComplexSerializer(serializers.Serializer):
     id = serializers.IntegerField(label='ID', read_only=True)
     name = serializers.CharField(max_length=100)
@@ -59,13 +65,14 @@ class FlatSerializer(serializers.Serializer):
     district = serializers.CharField(max_length=60)
     street = serializers.CharField(max_length=60)
     flat_type = serializers.CharField(max_length=60)
+    realty_type = serializers.CharField(max_length=60)
     developer = serializers.CharField(max_length=60)
     cost = serializers.IntegerField()
     square = serializers.FloatField()
     deadline = serializers.CharField(max_length=60)
     photo = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=True)
     address=serializers.CharField()
-    realty_type=serializers.CharField(max_length=60)
+    flat_image=serializers.CharField(max_length=60)
     residential_complex = serializers.CharField(max_length=60)
     latitude = serializers.FloatField()
     longitude = serializers.FloatField()

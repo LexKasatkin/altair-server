@@ -61,7 +61,7 @@ class Image(models.Model):
 
 class FlatImage(models.Model):
     flat = models.ForeignKey('Flat', default=None, on_delete=models.CASCADE)
-    image=models.ForeignKey('Image', default=None, on_delete=models.CASCADE)
+    image = models.ForeignKey('Image', default=None, on_delete=models.CASCADE)
 
 class ResidentialComplex(models.Model):
     name = models.CharField(max_length=100)
