@@ -11,7 +11,7 @@ from realty.models import City, District, RealtyType, FlatType, Developer, Flat,
     WallMaterial, Street, Image, ResidentialComplex, Album
 from realty.serializer import CitySerializer, RealtyTypeSerializer, DistrictSerializer, FlatTypeSerializer, \
     WallMaterialSerializer, DeveloperSerializer, FlatSerializer, StreetSerializer, ResidentialComplexSerializer, \
-    ImageSerializer, AlbumSerializer
+    ImageSerializer, AlbumSerializer, FlatDetailsSerializer
 
 
 class FlatListView(generics.ListAPIView):
@@ -102,4 +102,4 @@ class AlbumView(APIView):
 class FlatDetailsView(APIView):
     def get(self):
         queryset = Flat.objects.all()
-        serializer_class = FlatSerializer
+        serializer_class = FlatDetailsSerializer

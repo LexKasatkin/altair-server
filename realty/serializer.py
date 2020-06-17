@@ -57,8 +57,21 @@ class ResidentialComplexSerializer(serializers.Serializer):
     name = serializers.CharField(max_length=100)
 
 
-class FlatSerializer(serializers.ModelSerializer):
+class FlatDetailsSerializer(serializers.ModelSerializer):
     street = StreetSerializer(read_only=True)
+    wall_material = WallMaterialSerializer(read_only=True)
+    flat_type = FlatTypeSerializer(read_only=True)
+    developer = DeveloperSerializer(read_only=True)
+    realty_type = RealtyTypeSerializer(read_only=True)
+    residential_complex = ResidentialComplexSerializer(read_only=True)
+
+    class Meta:
+        model = Flat
+        fields = '__all__'
+
+
+class FlatSerializer(serializers.ModelSerializer):
+    flat_type = FlatTypeSerializer(read_only=True)
 
     class Meta:
         model = Flat
