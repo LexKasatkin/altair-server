@@ -61,7 +61,6 @@ class FlatSerializer(serializers.Serializer):
     quarter = serializers.CharField(max_length=30)
     street = serializers.CharField(max_length=60)
     house = serializers.CharField(max_length=30)
-    album = serializers.CharField(max_length=30)
     flat = serializers.CharField(max_length=30)
     description = serializers.CharField()
     wall_material = serializers.CharField(max_length=60)
