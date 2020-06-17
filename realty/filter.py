@@ -6,5 +6,5 @@ class FlatFilter(filters.FilterSet):
     square = filters.RangeFilter()
     class Meta:
         model = Flat
-        fields = ['id', 'city', 'wall_material', 'flat_type',
-                  'developer', 'district', 'cost', 'square']
+        fields = ['id', 'wall_material', 'flat_type',
+                  'developer', 'street', 'cost', 'square']

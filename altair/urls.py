@@ -20,9 +20,10 @@ from django.urls import path, include
 from altair import settings
 from realty.views import CityView, FlatTypeView, DeveloperView, WallMaterialView, FlatView
 
+adminUrl = admin.site.urls
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', admin.site.urls),
+    path('admin/', adminUrl),
+    path('', adminUrl),
     path('api-auth/', include('rest_framework.urls')),
     path('api/', include('realty.urls')),
 ]

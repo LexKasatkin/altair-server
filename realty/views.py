@@ -7,9 +7,11 @@ from rest_framework.views import APIView
 from rest_framework import generics
 from .filter import FlatFilter
 
-from realty.models import City, District, RealtyType, FlatType, Developer, Flat, WallMaterial
+from realty.models import City, District, RealtyType, FlatType, Developer, Flat, \
+    WallMaterial, Street, Image, ResidentialComplex
 from realty.serializer import CitySerializer, RealtyTypeSerializer, DistrictSerializer, FlatTypeSerializer, \
-    WallMaterialSerializer, DeveloperSerializer, FlatSerializer
+    WallMaterialSerializer, DeveloperSerializer, FlatSerializer, StreetSerializer, ResidentialComplexSerializer, \
+    ImageSerializer
 
 
 class FlatListView(generics.ListAPIView):
@@ -57,11 +59,32 @@ class FlatView(APIView):
     def get(self, request):
         flats = Flat.objects.all()
         serializer = FlatSerializer(flats, many=True)
-        return Response({"records": serializer.data})
+        return Response({"flats": serializer.data})
 
 
 class RealtyTypeView(APIView):
     def get(self, request):
         realty_types = RealtyType.objects.all()
         serializer = RealtyTypeSerializer(realty_types, many=True)
-        return Response({"records": serializer.data})
+        return Response({"realty_types": serializer.data})
+
+
+class StreetView(APIView):
+    def get(self, request):
+        streets = Street.objects.all()
+        serializer = StreetSerializer(streets, many=True)
+        return Response({"streets": serializer.data})
+
+
+class ResidentialComplexView(APIView):
+    def get(self, request):
+        residential_complexes = ResidentialComplex.objects.all()
+        serializer = ResidentialComplexSerializer(residential_complexes, many=True)
+        return Response({"residential_complexes": serializer.data})
+
+
+class ImageView(APIView):
+    def get(self, request):
+        images = Image.objects.all()
+        serializer = ImageSerializer(images, many=True)
+        return Response({"images": serializer.data})
