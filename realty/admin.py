@@ -2,7 +2,7 @@ from django.contrib import admin
 
 # Register your models here.
 from realty.models import City, RealtyType, District, FlatType, Developer, WallMaterial, Flat, Street, ResidentialComplex, \
-    Image, FlatImage
+    Image, Album
 from import_export.admin import ImportExportModelAdmin
 from .resource import CityResource, FlatResource
 
@@ -21,5 +21,5 @@ admin.site.register(FlatType)
 admin.site.register(RealtyType)
 admin.site.register(ResidentialComplex)
 admin.site.register(Image)
-admin.site.register(FlatImage)
 admin.site.register(Street)
+admin.site.register(Album)

@@ -1,4 +1,4 @@
-from .models import Flat, FlatImage
+from .models import Flat, Album
 from django_filters import rest_framework as filters
 
 class FlatFilter(filters.FilterSet):
@@ -9,10 +9,10 @@ class FlatFilter(filters.FilterSet):
         model = Flat
         fields = ['id', 'wall_material', 'flat_type',
                   'developer', 'street', 'cost', 'square', 'residential_complex',
-                'year_of_completion', 'flat_image', 'quarter']
+                'year_of_completion', 'quarter']
 
 
-class FlatImageFilter(filters.FilterSet):
+class AlbumFilter(filters.FilterSet):
     class Meta:
-        model = FlatImage
+        model = Album
         fields = ['flat']

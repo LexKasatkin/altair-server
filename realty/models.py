@@ -2,7 +2,6 @@ from enum import Enum
 
 from django.db import models
 
-
 class City(models.Model):
     name = models.CharField(max_length=60)
 
@@ -55,13 +54,12 @@ class RealtyType(models.Model):
 
 
 class Image(models.Model):
-    name=models.CharField(max_length=60)
+    name=models.CharField(max_length=100)
     image = models.ImageField(upload_to='img',  max_length=None)
 
+    def __str__(self):
+        return self.name
 
-class FlatImage(models.Model):
-    flat = models.ForeignKey('Flat', default=None, on_delete=models.CASCADE)
-    image = models.ForeignKey('Image', default=None, on_delete=models.CASCADE)
 
 class ResidentialComplex(models.Model):
     name = models.CharField(max_length=100)
@@ -95,7 +93,6 @@ class Flat(models.Model):
     house = models.CharField(max_length=30)
     flat = models.IntegerField(blank=True)
     flat_type = models.ForeignKey('FlatType', related_name='flat_types', on_delete=models.CASCADE)
-    flat_image=models.ForeignKey('FlatImage', related_name='flat_images', on_delete=models.CASCADE)
     developer = models.ForeignKey('Developer', related_name='developers', on_delete=models.CASCADE)
     cost = models.IntegerField()
     realty_type = models.ForeignKey('RealtyType', related_name='realty_types', on_delete=models.CASCADE)
@@ -111,4 +108,13 @@ class Flat(models.Model):
     longitude = models.FloatField(blank=True)
 
     def __str__(self):
-        return '%s %d %s' % (self.developer.name, self.square, self.district.name)
+        return '%s %d %s' % (self.developer.name, self.square, self.street.name)
+
+
+class Album(models.Model):
+    name = models.CharField(max_length=100)
+    flat = models.ForeignKey('Flat', on_delete=models.CASCADE, related_name='flats')
+    image =  models.ForeignKey('Image', on_delete=models.CASCADE, related_name='images')
+
+    def __str__(self):
+        return self.name

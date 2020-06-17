@@ -1,5 +1,5 @@
 from rest_framework import serializers
-
+from .models import Album
 
 class CitySerializer(serializers.Serializer):
     id = serializers.IntegerField(label='ID', read_only=True)
@@ -40,15 +40,13 @@ class StreetSerializer(serializers.Serializer):
 
 class ImageSerializer(serializers.Serializer):
     id = serializers.IntegerField(label='ID', read_only=True)
-    flat = serializers.CharField(max_length=60)
-    name = serializers.CharField(max_length=60)
     image = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=True)
 
 
-class FlatImageSerializer(serializers.Serializer):
-    id = serializers.IntegerField(label='ID', read_only=True)
-    image = serializers.CharField(max_length=60)
-    flat = serializers.CharField(max_length=60)
+class AlbumSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Album
+        fields = ('__all__')
 
 
 class ResidentialComplexSerializer(serializers.Serializer):
@@ -59,20 +57,20 @@ class ResidentialComplexSerializer(serializers.Serializer):
 class FlatSerializer(serializers.Serializer):
     id = serializers.IntegerField(label='ID', read_only=True)
     subject_of_law = serializers.CharField(max_length=30)
+    year_of_completion = serializers.IntegerField()
+    quarter = serializers.CharField(max_length=30)
+    street = serializers.CharField(max_length=60)
+    house = serializers.CharField(max_length=30)
+    album = serializers.CharField(max_length=30)
+    flat = serializers.CharField(max_length=30)
     description = serializers.CharField()
     wall_material = serializers.CharField(max_length=60)
-    city = serializers.CharField(max_length=60)
-    district = serializers.CharField(max_length=60)
-    street = serializers.CharField(max_length=60)
     flat_type = serializers.CharField(max_length=60)
     realty_type = serializers.CharField(max_length=60)
     developer = serializers.CharField(max_length=60)
     cost = serializers.IntegerField()
     square = serializers.FloatField()
-    deadline = serializers.CharField(max_length=60)
-    photo = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=True)
-    address=serializers.CharField()
-    flat_image=serializers.CharField(max_length=60)
+    main_image = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=True)
     residential_complex = serializers.CharField(max_length=60)
     latitude = serializers.FloatField()
     longitude = serializers.FloatField()
