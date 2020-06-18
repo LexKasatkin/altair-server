@@ -72,6 +72,7 @@ class FlatDetailsSerializer(serializers.ModelSerializer):
 
 class FlatSerializer(serializers.ModelSerializer):
     flat_type = FlatTypeSerializer(read_only=True)
+    street = StreetSerializer(read_only=True)
 
     class Meta:
         model = Flat
