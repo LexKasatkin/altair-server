@@ -12,6 +12,12 @@ class FlatFilter(filters.FilterSet):
                 'year_of_completion', 'quarter']
 
 
+class FlatDetailsFilter(filters.FilterSet):
+    class Meta:
+        model = Flat
+        fields = ['id']
+
+
 class AlbumFilter(filters.FilterSet):
     class Meta:
         model = Album

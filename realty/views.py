@@ -5,7 +5,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import generics
-from .filter import FlatFilter, AlbumFilter
+from .filter import FlatFilter, AlbumFilter, FlatDetailsFilter
 
 from realty.models import City, District, RealtyType, FlatType, Developer, Flat, \
     WallMaterial, Street, Image, ResidentialComplex, Album
@@ -99,7 +99,8 @@ class AlbumView(APIView):
         filterset_class = AlbumFilter
 
 
-class FlatDetailsView(APIView):
-    def get(self):
-        queryset = Flat.objects.all()
-        serializer_class = FlatDetailsSerializer
+class FlatDetailsView(generics.ListAPIView):
+   queryset = Flat.objects.all()
+   serializer_class = FlatDetailsSerializer
+   filter_backends = (DjangoFilterBackend,)
+   filterset_class = FlatDetailsFilter
