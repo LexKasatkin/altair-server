@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import viewsets
+from django.shortcuts import get_object_or_404
 
 # Create your views here.
 from rest_framework.response import Response
@@ -91,16 +93,20 @@ class ImageView(APIView):
         return Response({"images": serializer.data})
 
 
-class AlbumView(APIView):
-    def get(self, request):
+class AlbumView(generics.ListAPIView):
         queryset = Album.objects.all()
         serializer_class = AlbumSerializer
         filter_backends = (DjangoFilterBackend,)
         filterset_class = AlbumFilter
 
 
-class FlatDetailsView(generics.ListAPIView):
-   queryset = Flat.objects.all()
-   serializer_class = FlatDetailsSerializer
-   filter_backends = (DjangoFilterBackend,)
-   filterset_class = FlatDetailsFilter
+class FlatViewSet(viewsets.ViewSet):
+    """
+      A simple ViewSet that for listing or retrieving users.
+      """
+
+    def retrieve(self, request, pk=None):
+        queryset = Flat.objects.all()
+        flat = get_object_or_404(queryset, pk=pk)
+        serializer = FlatDetailsSerializer(flat)
+        return Response(serializer.data)

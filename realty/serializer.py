@@ -64,6 +64,8 @@ class FlatDetailsSerializer(serializers.ModelSerializer):
     developer = DeveloperSerializer(read_only=True)
     realty_type = RealtyTypeSerializer(read_only=True)
     residential_complex = ResidentialComplexSerializer(read_only=True)
+    layout = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=True)
+    main_image = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=True)
 
     class Meta:
         model = Flat
@@ -73,6 +75,8 @@ class FlatDetailsSerializer(serializers.ModelSerializer):
 class FlatSerializer(serializers.ModelSerializer):
     flat_type = FlatTypeSerializer(read_only=True)
     street = StreetSerializer(read_only=True)
+    layout = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=True)
+    main_image = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=True)
 
     class Meta:
         model = Flat
