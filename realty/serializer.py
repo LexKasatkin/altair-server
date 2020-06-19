@@ -1,5 +1,7 @@
 from rest_framework import serializers
 from .models import Album, Street, District, Flat, City
+from imagekit.models import ImageSpecField
+from imagekit.processors import ResizeToFill
 
 class CitySerializer(serializers.ModelSerializer):
     class Meta:
@@ -46,12 +48,6 @@ class ImageSerializer(serializers.Serializer):
     image = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=True)
 
 
-class AlbumSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Album
-        fields = ('__all__')
-
-
 class ResidentialComplexSerializer(serializers.Serializer):
     id = serializers.IntegerField(label='ID', read_only=True)
     name = serializers.CharField(max_length=100)
@@ -66,6 +62,8 @@ class FlatDetailsSerializer(serializers.ModelSerializer):
     residential_complex = ResidentialComplexSerializer(read_only=True)
     layout = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=True)
     main_image = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=True)
+    layout_thumbnail = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=True)
+    main_image_thumbnail = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=True)
 
     class Meta:
         model = Flat
@@ -77,7 +75,17 @@ class FlatSerializer(serializers.ModelSerializer):
     street = StreetSerializer(read_only=True)
     layout = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=True)
     main_image = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=True)
+    layout_thumbnail = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=True)
+    main_image_thumbnail = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=True)
 
     class Meta:
         model = Flat
         fields = '__all__'
+
+
+class AlbumSerializer(serializers.ModelSerializer):
+    image = ImageSerializer(read_only=True)
+    flat = FlatSerializer(read_only=True)
+    class Meta:
+        model = Album
+        fields = ('__all__')

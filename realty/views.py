@@ -8,6 +8,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import generics
 from .filter import FlatFilter, AlbumFilter, FlatDetailsFilter
+from .paginations import StandardResultsSetPagination
 
 from realty.models import City, District, RealtyType, FlatType, Developer, Flat, \
     WallMaterial, Street, Image, ResidentialComplex, Album
@@ -21,6 +22,7 @@ class FlatListView(generics.ListAPIView):
    serializer_class = FlatSerializer
    filter_backends = (DjangoFilterBackend,)
    filterset_class = FlatFilter
+   pagination_class = StandardResultsSetPagination
 
 
 class CityView(APIView):

@@ -1,4 +1,6 @@
 from enum import Enum
+from imagekit.models import ImageSpecField
+from imagekit.processors import ResizeToFill
 
 from django.db import models
 
@@ -104,6 +106,14 @@ class Flat(models.Model):
                                default=QuarterChoices.FirstQuarter, blank=True)
     main_image = models.ImageField(upload_to='img',  max_length=None, blank=True)
     layout = models.ImageField(upload_to='img',  max_length=None, blank=True)
+    main_image_thumbnail = ImageSpecField(source='main_image',
+                                      processors=[ResizeToFill(300, 200)],
+                                      format='JPEG',
+                                      options={'quality': 60})
+    layout_thumbnail = ImageSpecField(source='main_image',
+                                      processors=[ResizeToFill(300, 200)],
+                                      format='JPEG',
+                                      options={'quality': 60})
     latitude = models.FloatField(blank=True)
     longitude = models.FloatField(blank=True)
 
