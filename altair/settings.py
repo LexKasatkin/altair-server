@@ -145,7 +145,9 @@ CORS_ORIGIN_WHITELIST = [
     "https://ainvest24.xyz",
     "http://localhost",
     "http://127.0.0.1",
-    "https://ainvest24.ru",]
+    "https://ainvest24.ru",
+    "http://192.168.0.40"]
+CORS_ORIGIN_ALLOW_ALL = True
 
 ALLOWED_HOSTS = [
     "ainvest24.ru",

@@ -23,6 +23,7 @@ class FlatListView(generics.ListAPIView):
    filter_backends = (DjangoFilterBackend,)
    filterset_class = FlatFilter
    pagination_class = StandardResultsSetPagination
+   ordering_fields = ['cost', 'square']
 
 
 class CityView(APIView):
@@ -102,13 +103,6 @@ class AlbumView(generics.ListAPIView):
         filterset_class = AlbumFilter
 
 
-class FlatViewSet(viewsets.ViewSet):
-    """
-      A simple ViewSet that for listing or retrieving users.
-      """
-
-    def retrieve(self, request, pk=None):
+class FlatDetailsView(generics.RetrieveAPIView):
         queryset = Flat.objects.all()
-        flat = get_object_or_404(queryset, pk=pk)
-        serializer = FlatDetailsSerializer(flat)
-        return Response(serializer.data)
+        serializer_class = FlatDetailsSerializer

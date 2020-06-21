@@ -3,7 +3,7 @@ from rest_framework import viewsets
 from rest_framework.routers import DefaultRouter
 
 from realty.views import DistrictView, CityView, RealtyTypeView, FlatTypeView, DeveloperView, WallMaterialView, \
-    FlatListView, StreetView, ResidentialComplexView, ImageView, AlbumView, FlatViewSet
+    FlatListView, StreetView, ResidentialComplexView, ImageView, AlbumView, FlatDetailsView
 
 app_name = "realty"
 # app_name will help us do a reverse look-up latter.
@@ -19,5 +19,5 @@ urlpatterns = [
     path('residential-complexes/', ResidentialComplexView.as_view()),
     path('streets/', StreetView.as_view()),
     path('albums/', AlbumView.as_view()),
-    path('flats/<int:pk>', FlatViewSet.as_view({'get': 'retrieve'})),
+    path('flats/<int:pk>', FlatDetailsView.as_view()),
 ]

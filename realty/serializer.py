@@ -62,6 +62,8 @@ class FlatDetailsSerializer(serializers.ModelSerializer):
     residential_complex = ResidentialComplexSerializer(read_only=True)
     layout = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=True)
     main_image = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=True)
+    layout_big = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=True)
+    main_image_big = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=True)
     layout_thumbnail = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=True)
     main_image_thumbnail = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=True)
 

@@ -94,6 +94,8 @@ class Flat(models.Model):
     street = models.ForeignKey('Street', related_name='streets', on_delete=models.CASCADE)
     house = models.CharField(max_length=30)
     flat = models.IntegerField(blank=True)
+    floor = models.IntegerField(blank=True)
+    max_floor = models.IntegerField(blank=True)
     flat_type = models.ForeignKey('FlatType', related_name='flat_types', on_delete=models.CASCADE)
     developer = models.ForeignKey('Developer', related_name='developers', on_delete=models.CASCADE)
     cost = models.IntegerField()
@@ -106,6 +108,14 @@ class Flat(models.Model):
                                default=QuarterChoices.FirstQuarter, blank=True)
     main_image = models.ImageField(upload_to='img',  max_length=None, blank=True)
     layout = models.ImageField(upload_to='img',  max_length=None, blank=True)
+    main_image_big = ImageSpecField(source='main_image',
+                                      processors=[ResizeToFill(640, 480)],
+                                      format='JPEG',
+                                      options={'quality': 60})
+    layout_big = ImageSpecField(source='layout',
+                                      processors=[ResizeToFill(640, 480)],
+                                      format='JPEG',
+                                      options={'quality': 60})
     main_image_thumbnail = ImageSpecField(source='main_image',
                                       processors=[ResizeToFill(300, 200)],
                                       format='JPEG',
