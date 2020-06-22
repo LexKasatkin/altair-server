@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework import viewsets
 from django.shortcuts import get_object_or_404
 
@@ -20,9 +21,10 @@ from realty.serializer import CitySerializer, RealtyTypeSerializer, DistrictSeri
 class FlatListView(generics.ListAPIView):
    queryset = Flat.objects.all()
    serializer_class = FlatSerializer
-   filter_backends = (DjangoFilterBackend,)
+   filter_backends = (DjangoFilterBackend, OrderingFilter)
    filterset_class = FlatFilter
    pagination_class = StandardResultsSetPagination
+   search_fields = ['district', 'street', 'developer']
    ordering_fields = ['cost', 'square']
 
 

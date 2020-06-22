@@ -117,11 +117,11 @@ class Flat(models.Model):
                                       format='JPEG',
                                       options={'quality': 60})
     main_image_thumbnail = ImageSpecField(source='main_image',
-                                      processors=[ResizeToFill(300, 200)],
+                                      processors=[ResizeToFill(320, 240)],
                                       format='JPEG',
                                       options={'quality': 60})
-    layout_thumbnail = ImageSpecField(source='main_image',
-                                      processors=[ResizeToFill(300, 200)],
+    layout_thumbnail = ImageSpecField(source='layout',
+                                      processors=[ResizeToFill(320, 240)],
                                       format='JPEG',
                                       options={'quality': 60})
     latitude = models.FloatField(blank=True)
