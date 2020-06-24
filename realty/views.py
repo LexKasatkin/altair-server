@@ -17,7 +17,6 @@ from realty.serializer import CitySerializer, RealtyTypeSerializer, DistrictSeri
     WallMaterialSerializer, DeveloperSerializer, FlatSerializer, StreetSerializer, ResidentialComplexSerializer, \
     ImageSerializer, AlbumSerializer, FlatDetailsSerializer
 
-
 class FlatListView(generics.ListAPIView):
    queryset = Flat.objects.all()
    serializer_class = FlatSerializer

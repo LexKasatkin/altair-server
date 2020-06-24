@@ -20,6 +20,17 @@ from django.urls import path, include
 from altair import settings
 from realty.views import CityView, FlatTypeView, DeveloperView, WallMaterialView, FlatView
 
+from django.contrib import admin
+from django.utils.translation import gettext_lazy as _
+from django.apps import AppConfig
+
+class CustomersConfig(AppConfig):
+    name = 'Недвижимость'
+    verbose_name = _('Недвижимость')
+
+admin.site.index_title = _(u'Джанго администрирование')
+admin.site.site_header = _(u'Администрирование сайта')
+admin.site.site_title = _(u'Управление сайта')
 adminUrl = admin.site.urls
 urlpatterns = [
     path('admin/', adminUrl),
