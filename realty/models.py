@@ -114,12 +114,6 @@ class Flat(models.Model):
         Individual = 'Физическое лицо'
         Entity = 'Юридическое лицо'
 
-    class QuarterChoices(models.TextChoices):
-        FirstQuarter = 'I квартал'
-        SecondQuarter = 'II квартал'
-        ThirdQuarter = 'III квартал'
-        FourthQuarter = 'IV квартал'
-
     @classmethod
     def choices(cls):
         return tuple((i.name, i.value) for i in cls)
@@ -129,22 +123,13 @@ class Flat(models.Model):
                             default=SubjectsOfLawChoices.Entity,
                                       verbose_name=_(u'На кого оформлена'))
     description = models.TextField(blank=True, verbose_name=_(u'Описание'))
-    wall_material = models.ForeignKey('WallMaterial', related_name='wall_materials', on_delete=models.CASCADE, verbose_name=_(u'Материал стен'))
-    street = models.ForeignKey('Street', related_name='streets', on_delete=models.CASCADE, verbose_name=_('Улица'))
-    house = models.CharField(max_length=30, verbose_name=_(u'Дом'))
     flat = models.IntegerField(blank=True, verbose_name=_(u'Квартира'))
     floor = models.IntegerField(blank=True, verbose_name=_(u'Этаж'))
-    max_floor = models.IntegerField(blank=True, verbose_name=_(u'Максимальный этаж'))
     flat_type = models.ForeignKey('FlatType', related_name='flat_types', on_delete=models.CASCADE, verbose_name=_(u'Тип квартиры (количество комнат)'))
-    developer = models.ForeignKey('Developer', related_name='developers', on_delete=models.CASCADE, verbose_name=_(u'Застройщик'))
+    house = models.ForeignKey('House', related_name='houses', on_delete=models.CASCADE, verbose_name=_(u'Дом'))
     cost = models.IntegerField(verbose_name=_(u'Стоимость'))
-    realty_type = models.ForeignKey('RealtyType', related_name='realty_types', on_delete=models.CASCADE, verbose_name=_(u'Тип недвижимости'))
-    residential_complex = models.ForeignKey('ResidentialComplex', related_name='residential_complexes', on_delete=models.CASCADE, verbose_name=_(u'Жилой комплекс'))
+    realty_type = models.ForeignKey('RealtyType', related_name='realty_types', on_delete=models.CASCADE, verbose_name=_(u'Тип квартиры (вторичная, новостройка и т.д.)'))
     square = models.FloatField(verbose_name=_(u'Площадь'))
-    year_of_completion = models.IntegerField(blank=True, verbose_name=_(u'Год (сдача)'))
-    quarter = models.CharField(max_length=30,
-                               choices=QuarterChoices.choices,
-                               default=QuarterChoices.FirstQuarter, blank=True, verbose_name=_(u'Квартал (сдача)'))
     main_image = models.ImageField(upload_to='img',  max_length=None, blank=True, verbose_name=_(u'Постер'))
     layout = models.ImageField(upload_to='img',  max_length=None, blank=True, verbose_name=_(u'Планировка'))
     main_image_big = ImageSpecField(source='main_image',
@@ -163,15 +148,13 @@ class Flat(models.Model):
                                       processors=[ResizeToFill(320, 240)],
                                       format='JPEG',
                                       options={'quality': 60})
-    latitude = models.FloatField(blank=True, verbose_name=_(u'Долгота'))
-    longitude = models.FloatField(blank=True, verbose_name=_(u'Широта'))
 
     class Meta:
         verbose_name = _(u'квартира')
         verbose_name_plural = _(u'квартиры')
 
     def __str__(self):
-        return '%s %d кв.м. %s %s, кв.%d' % (self.developer.name, self.square, self.street.name, self.house, self.flat)
+        return '%s %d кв.м. %s %s, кв.%d' % (self.house.developer.name, self.square, self.house.street.name, self.house.house, self.flat)
 
 
 class Album(models.Model):
@@ -185,3 +168,47 @@ class Album(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class House(models.Model):
+    class QuarterChoices(models.TextChoices):
+        FirstQuarter = 'I квартал'
+        SecondQuarter = 'II квартал'
+        ThirdQuarter = 'III квартал'
+        FourthQuarter = 'IV квартал'
+
+    @classmethod
+    def choices(cls):
+        return tuple((i.name, i.value) for i in cls)
+
+    description = models.TextField(blank=True, verbose_name=_(u'Описание'))
+    wall_material = models.ForeignKey('WallMaterial', related_name='wall_materials', on_delete=models.CASCADE, verbose_name=_(u'Материал стен'))
+    street = models.ForeignKey('Street', related_name='streets', on_delete=models.CASCADE, verbose_name=_('Улица'))
+    house = models.CharField(max_length=30, verbose_name=_(u'Дом'))
+    developer = models.ForeignKey('Developer', related_name='developers', on_delete=models.CASCADE,
+                                  verbose_name=_(u'Застройщик'))
+    year_of_completion = models.IntegerField(blank=True, verbose_name=_(u'Год (сдача)'))
+    quarter = models.CharField(max_length=30,
+                               choices=QuarterChoices.choices,
+                               default=QuarterChoices.FirstQuarter, blank=True, verbose_name=_(u'Квартал (сдача)'))
+    residential_complex = models.ForeignKey('ResidentialComplex', related_name='residential_complexes', on_delete=models.CASCADE, verbose_name=_(u'Жилой комплекс'))
+    max_floor = models.IntegerField(blank=True, verbose_name=_(u'Максимальный этаж'))
+    main_image = models.ImageField(upload_to='img', max_length=None, blank=True, verbose_name=_(u'Постер'))
+    main_image_big = ImageSpecField(source='main_image',
+                                    processors=[ResizeToFill(640, 480)],
+                                    format='JPEG',
+                                    options={'quality': 60})
+    main_image_thumbnail = ImageSpecField(source='main_image',
+                                          processors=[ResizeToFill(320, 240)],
+                                          format='JPEG',
+                                          options={'quality': 60})
+    latitude = models.FloatField(blank=True, verbose_name=_(u'Долгота'))
+    longitude = models.FloatField(blank=True, verbose_name=_(u'Широта'))
+    contain_flats = models.BooleanField(blank=True, default=True, verbose_name=_(u'Многоквартирный дом'))
+
+    class Meta:
+        verbose_name = _(u'дом')
+        verbose_name_plural = _(u'дома')
+
+    def __str__(self):
+        return '%s, %s, %s, %s' % (self.developer.name, self.street.district.name, self.street.name, self.house)

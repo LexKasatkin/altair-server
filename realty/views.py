@@ -8,23 +8,14 @@ from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import generics
-from .filter import FlatFilter, AlbumFilter, FlatDetailsFilter
+from .filter import FlatFilter, AlbumFilter, HouseFilter
 from .paginations import StandardResultsSetPagination
 
 from realty.models import City, District, RealtyType, FlatType, Developer, Flat, \
-    WallMaterial, Street, Image, ResidentialComplex, Album
+    WallMaterial, Street, Image, ResidentialComplex, Album, House
 from realty.serializer import CitySerializer, RealtyTypeSerializer, DistrictSerializer, FlatTypeSerializer, \
     WallMaterialSerializer, DeveloperSerializer, FlatSerializer, StreetSerializer, ResidentialComplexSerializer, \
-    ImageSerializer, AlbumSerializer, FlatDetailsSerializer
-
-class FlatListView(generics.ListAPIView):
-   queryset = Flat.objects.all()
-   serializer_class = FlatSerializer
-   filter_backends = (DjangoFilterBackend, OrderingFilter)
-   filterset_class = FlatFilter
-   pagination_class = StandardResultsSetPagination
-   search_fields = ['district', 'street', 'developer']
-   ordering_fields = ['cost', 'square']
+    ImageSerializer, AlbumSerializer, FlatDetailsSerializer, HouseSerializer
 
 
 class CityView(APIView):
@@ -104,6 +95,24 @@ class AlbumView(generics.ListAPIView):
         filterset_class = AlbumFilter
 
 
+class HouseListView(generics.ListAPIView):
+   queryset = House.objects.all()
+   serializer_class = HouseSerializer
+   filter_backends = (DjangoFilterBackend, )
+   filterset_class = HouseFilter
+   pagination_class = StandardResultsSetPagination
+   search_fields = ['district', 'street', 'developer']
+
+
 class FlatDetailsView(generics.RetrieveAPIView):
-        queryset = Flat.objects.all()
-        serializer_class = FlatDetailsSerializer
+    queryset = Flat.objects.all()
+    serializer_class = FlatDetailsSerializer
+
+
+class FlatListView(generics.ListAPIView):
+   queryset = Flat.objects.all()
+   serializer_class = FlatSerializer
+   filter_backends = (DjangoFilterBackend, OrderingFilter)
+   filterset_class = FlatFilter
+   pagination_class = StandardResultsSetPagination
+   ordering_fields = ['cost', 'square']
