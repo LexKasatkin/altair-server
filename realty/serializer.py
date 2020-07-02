@@ -83,7 +83,9 @@ class FlatSerializer(serializers.ModelSerializer):
     wall_material = serializers.CharField(read_only=True, source='house.wall_material')
     developer = serializers.CharField(read_only=True, source='house.developer')
     residential_complex = serializers.CharField(read_only=True, source='house.residential_complex')
-
+    year_of_completion = serializers.IntegerField(read_only=True, source='house.year_of_completion')
+    quarter = serializers.CharField(read_only=True, source='house.quarter')
+    
     class Meta:
         model = Flat
         fields = '__all__'
