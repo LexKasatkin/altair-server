@@ -85,6 +85,8 @@ class FlatSerializer(serializers.ModelSerializer):
     residential_complex = serializers.CharField(read_only=True, source='house.residential_complex')
     year_of_completion = serializers.IntegerField(read_only=True, source='house.year_of_completion')
     quarter = serializers.CharField(read_only=True, source='house.quarter')
+    latitude = serializers.FloatField(read_only=True, source='house.latitude')
+    longitude = serializers.FloatField(read_only=True, source='house.longitude')
     
     class Meta:
         model = Flat
