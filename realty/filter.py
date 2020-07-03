@@ -35,20 +35,19 @@ class HouseFilter(filters.FilterSet):
 class FlatFilter(filters.FilterSet):
     cost = filters.RangeFilter()
     square = filters.RangeFilter()
-    house = filters.CharFilter(
-        field_name='house',
-        lookup_expr='icontains',
-        method='filter_house_year_of_completion'
-    )
+    house = filters.CharFilter(method='filter_by_house')
 
     class Meta:
         model = Flat
         fields = {'id', 'cost', 'square', 'house'}
 
-    def filter_house_year_of_completion(self, queryset, name, value):
-        street = Q(house__street__icontains=value)
-        year_of_completion = Q(house__year_of_completion__icontains=value)
-        return queryset.filter(street | year_of_completion)
+    def filter_by_house(self, queryset, name, value):
+        developer = Developer.objects.filter(developer__in=value)
+        wall_material= WallMaterial.objects.filter(wall_material__in=value)
+        street = Street.objects.filter(street__in=value)
+        house = House.objects.filter(developer__in=developer).filter(street__in=street).filter(wall_material__in=wall_material)
+        return queryset.filter(house__in=house)
+        
 
 class AlbumFilter(filters.FilterSet):
     class Meta:
