@@ -50,7 +50,6 @@ REST_FRAMEWORK = {
 }
 
 MIDDLEWARE = [
-    'djdev_panel.middleware.DebugMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
