@@ -45,7 +45,7 @@ class StreetSerializer(serializers.ModelSerializer):
 
 class ImageSerializer(serializers.Serializer):
     id = serializers.IntegerField(label='ID', read_only=True)
-    image = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=True)
+    image = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=False)
 
 
 class ResidentialComplexSerializer(serializers.Serializer):
@@ -58,9 +58,9 @@ class HouseSerializer(serializers.ModelSerializer):
     wall_material = WallMaterialSerializer(read_only=True)
     developer = DeveloperSerializer(read_only=True)
     residential_complex = ResidentialComplexSerializer(read_only=True)
-    main_image = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=True)
-    main_image_big = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=True)
-    main_image_thumbnail = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=True)
+    main_image = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=False)
+    main_image_big = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=False)
+    main_image_thumbnail = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=False)
 
     class Meta:
         model = House
@@ -69,12 +69,12 @@ class HouseSerializer(serializers.ModelSerializer):
 
 class FlatSerializer(serializers.ModelSerializer):
     flat_type = serializers.CharField(read_only=True, source='flat_type.name')
-    layout = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=True)
-    layout_thumbnail = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=True)
-    layout_big = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=True)
-    main_image = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=True)
-    main_image_big = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=True)
-    main_image_thumbnail = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=True)
+    layout = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=False)
+    layout_thumbnail = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=False)
+    layout_big = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=False)
+    main_image = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=False)
+    main_image_big = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=False)
+    main_image_thumbnail = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=False)
     city = serializers.CharField(read_only=True, source='house.street.district.city.name')
     district = serializers.CharField(read_only=True, source='house.street.district.name')
     street = serializers.CharField(read_only=True, source='house.street.name')
@@ -95,12 +95,12 @@ class FlatSerializer(serializers.ModelSerializer):
 
 class FlatDetailsSerializer(serializers.ModelSerializer):
     flat_type = serializers.CharField(read_only=True, source='flat_type.name')
-    layout = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=True)
-    layout_thumbnail = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=True)
-    layout_big = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=True)
-    main_image = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=True)
-    main_image_big = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=True)
-    main_image_thumbnail = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=True)
+    layout = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=False)
+    layout_thumbnail = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=False)
+    layout_big = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=False)
+    main_image = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=False)
+    main_image_big = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=False)
+    main_image_thumbnail = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=False)
     city = serializers.CharField(read_only=True, source='house.street.district.city.name')
     district = serializers.CharField(read_only=True, source='house.street.district.name')
     street = serializers.CharField(read_only=True, source='house.street.name')
@@ -109,9 +109,9 @@ class FlatDetailsSerializer(serializers.ModelSerializer):
     wall_material = serializers.CharField(read_only=True, source='house.wall_material')
     developer = serializers.CharField(read_only=True, source='house.developer')
     residential_complex = serializers.CharField(read_only=True, source='house.residential_complex')
-    house_main_image = serializers.ImageField(read_only=True, source='house.main_image', allow_empty_file=True, use_url=True)
-    house_main_image_big = serializers.ImageField(read_only=True, source='house.main_image_big', allow_empty_file=True, use_url=True)
-    house_main_image_thumbnail = serializers.ImageField(read_only=True, source='house.main_image_thumbnail', allow_empty_file=True, use_url=True)
+    house_main_image = serializers.ImageField(read_only=True, source='house.main_image', allow_empty_file=True, use_url=False)
+    house_main_image_big = serializers.ImageField(read_only=True, source='house.main_image_big', allow_empty_file=True, use_url=False)
+    house_main_image_thumbnail = serializers.ImageField(read_only=True, source='house.main_image_thumbnail', allow_empty_file=True, use_url=False)
     max_floor = serializers.CharField(read_only=True, source='house.max_floor')
     year_of_completion = serializers.IntegerField(read_only=True, source='house.year_of_completion')
     quarter = serializers.CharField(read_only=True, source='house.quarter')
