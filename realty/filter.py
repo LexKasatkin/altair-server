@@ -2,7 +2,6 @@ from .models import Flat, Album, House,Developer, Street, District
 from django_filters import rest_framework as filters
 from django.db.models import Q
 
-
 class DeveloperFilter(filters.FilterSet):
     class Meta:
         model = Developer
@@ -32,22 +31,22 @@ class HouseFilter(filters.FilterSet):
         fields = {'year_of_completion', 'developer', 'street'}
 
 
+class NumberInFilter(filters.BaseInFilter, filters.NumberFilter):
+    pass
+
+
 class FlatFilter(filters.FilterSet):
     cost = filters.RangeFilter()
     square = filters.RangeFilter()
-    house = filters.CharFilter(method='filter_by_house')
+    developer = NumberInFilter(field_name='house__developer', lookup_expr='in')
+    wall_material =  NumberInFilter(field_name='house__wall_material', lookup_expr='in')
+    street = NumberInFilter(field_name='house__street', lookup_expr='in')
+    district = NumberInFilter(field_name='house__street__district', lookup_expr='in')
 
     class Meta:
         model = Flat
-        fields = {'id', 'cost', 'square', 'house'}
+        fields = {'id', 'cost', 'square', 'house__developer', 'house__wall_material', 'house__street', 'house__street__district'}
 
-    def filter_by_house(self, queryset, name, value):
-        developer = Developer.objects.filter(developer__in=value)
-        wall_material= WallMaterial.objects.filter(wall_material__in=value)
-        street = Street.objects.filter(street__in=value)
-        house = House.objects.filter(developer__in=developer).filter(street__in=street).filter(wall_material__in=wall_material)
-        return queryset.filter(house__in=house)
-        
 
 class AlbumFilter(filters.FilterSet):
     class Meta:
