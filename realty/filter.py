@@ -41,11 +41,13 @@ class FlatFilter(filters.FilterSet):
     developer = NumberInFilter(field_name='house__developer', lookup_expr='in')
     wall_material =  NumberInFilter(field_name='house__wall_material', lookup_expr='in')
     street = NumberInFilter(field_name='house__street', lookup_expr='in')
+    flat_type = NumberInFilter(field_name='house__flat_type', lookup_expr='in')
     district = NumberInFilter(field_name='house__street__district', lookup_expr='in')
 
     class Meta:
         model = Flat
-        fields = {'id', 'cost', 'square', 'house__developer', 'house__wall_material', 'house__street', 'house__street__district'}
+        fields = {'id', 'cost', 'square', 'house__developer', 'house__wall_material', 'house__street', 'house__street__district',
+                  'house__flat_type'}
 
 
 class AlbumFilter(filters.FilterSet):
