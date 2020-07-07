@@ -128,7 +128,6 @@ class Flat(models.Model):
     flat_type = models.ForeignKey('FlatType', related_name='flat_types', on_delete=models.CASCADE, verbose_name=_(u'Тип квартиры (количество комнат)'))
     house = models.ForeignKey('House', related_name='houses', on_delete=models.CASCADE, verbose_name=_(u'Дом'))
     cost = models.IntegerField(verbose_name=_(u'Стоимость'))
-    realty_type = models.ForeignKey('RealtyType', related_name='realty_types', on_delete=models.CASCADE, verbose_name=_(u'Тип квартиры (вторичная, новостройка и т.д.)'))
     square = models.FloatField(verbose_name=_(u'Площадь'))
     main_image = models.ImageField(upload_to='img',  max_length=None, blank=True, verbose_name=_(u'Постер'))
     layout = models.ImageField(upload_to='img',  max_length=None, blank=True, verbose_name=_(u'Планировка'))
@@ -202,6 +201,7 @@ class House(models.Model):
                                           processors=[ResizeToFill(320, 240)],
                                           format='JPEG',
                                           options={'quality': 60})
+    realty_type = models.ForeignKey('RealtyType', related_name='realty_types', on_delete=models.CASCADE, verbose_name=_(u'Тип недвижимости (вторичная, новостройка и т.д.)'))
     latitude = models.FloatField(blank=True, verbose_name=_(u'Долгота'))
     longitude = models.FloatField(blank=True, verbose_name=_(u'Широта'))
     contain_flats = models.BooleanField(blank=True, default=True, verbose_name=_(u'Многоквартирный дом'))
