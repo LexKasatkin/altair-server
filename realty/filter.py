@@ -44,6 +44,7 @@ class FlatFilter(filters.FilterSet):
     flat_type = NumberInFilter(field_name='flat_type', lookup_expr='in')
     district = NumberInFilter(field_name='house__street__district', lookup_expr='in')
     house = NumberInFilter(field_name='house')
+    flat_id = filters.NumberFilter(field_name='id', exclude=True)
 
     class Meta:
         model = Flat
