@@ -80,6 +80,7 @@ class FlatSerializer(serializers.ModelSerializer):
     street = serializers.CharField(read_only=True, source='house.street.name')
     house = serializers.CharField(read_only=True, source='house.house')
     flat = serializers.CharField(read_only=True)
+    house_id = serializers.IntegerField(read_only=True, source='house.id')
     wall_material = serializers.CharField(read_only=True, source='house.wall_material')
     developer = serializers.CharField(read_only=True, source='house.developer')
     residential_complex = serializers.CharField(read_only=True, source='house.residential_complex')
