@@ -148,6 +148,10 @@ class Flat(models.Model):
                                       format='JPEG',
                                       options={'quality': 60})
 
+    @property
+    def get_cost_square(self):
+        return self.cost / self.square
+
     class Meta:
         verbose_name = _(u'квартира')
         verbose_name_plural = _(u'квартиры')

@@ -3,6 +3,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework import viewsets
 from django.shortcuts import get_object_or_404
+from django.db.models import F, ExpressionWrapper, DecimalField
 
 # Create your views here.
 from rest_framework.response import Response
@@ -89,19 +90,19 @@ class ImageView(APIView):
 
 
 class AlbumView(generics.ListAPIView):
-        queryset = Album.objects.all()
-        serializer_class = AlbumSerializer
-        filter_backends = (DjangoFilterBackend,)
-        filterset_class = AlbumFilter
+    queryset = Album.objects.all()
+    serializer_class = AlbumSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filterset_class = AlbumFilter
 
 
 class HouseListView(generics.ListAPIView):
-   queryset = House.objects.all()
-   serializer_class = HouseSerializer
-   filter_backends = (DjangoFilterBackend, )
-   filterset_class = HouseFilter
-   pagination_class = StandardResultsSetPagination
-   search_fields = ['district', 'street', 'developer']
+    queryset = House.objects.all()
+    serializer_class = HouseSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filterset_class = HouseFilter
+    pagination_class = StandardResultsSetPagination
+    search_fields = ['district', 'street', 'developer']
 
 
 class FlatDetailsView(generics.RetrieveAPIView):
@@ -110,9 +111,15 @@ class FlatDetailsView(generics.RetrieveAPIView):
 
 
 class FlatListView(generics.ListAPIView):
-   queryset = Flat.objects.all()
-   serializer_class = FlatSerializer
-   filter_backends = (DjangoFilterBackend, OrderingFilter)
-   filterset_class = FlatFilter
-   pagination_class = StandardResultsSetPagination
-   ordering_fields = ['cost', 'square']
+    queryset = Flat.objects.all()
+    serializer_class = FlatSerializer
+    filter_backends = (DjangoFilterBackend, OrderingFilter)
+    filterset_class = FlatFilter
+    pagination_class = StandardResultsSetPagination
+    ordering_fields = ['cost', 'square', 'cost_square']
+
+    def get_queryset(self):
+        qs = super(FlatListView, self).get_queryset()
+        qs = qs.annotate(cost_square=ExpressionWrapper(F('cost') / F('square'), output_field=DecimalField())).order_by(
+            'cost_square')
+        return qs
