@@ -157,14 +157,10 @@ class Flat(models.Model):
         verbose_name_plural = _(u'квартиры')
 
     def __str__(self):
-        if self.flat and self.house.street:
-            return '%s %d кв.м. %s %s, кв.%s' % (self.house.developer.name, self.square, self.house.street.name, self.house.house, self.flat)
-        elif self.flat:
-            return '%s %d кв.м. %s %s, кв.%s' % (self.house.developer.name, self.square, self.house.residential_complex.name, self.house.house, self.flat)
-        elif self.house.street:
-            return '%s %d кв.м. %s %s' % (self.house.developer.name, self.square, self.house.street.name, self.house.house)
+        if self.flat:
+            return '%d кв.м. %s кв.%s' % (self.square, self.house, self.flat)
         else:
-            return '%s %d кв.м. %s %s' % (self.house.developer.name, self.square, self.house.residential_complex.name, self.house.house)
+            return '%d кв.м. %s' % (self.square, self.house)
 
 
 class Album(models.Model):
@@ -195,7 +191,7 @@ class House(models.Model):
     wall_material = models.ForeignKey('WallMaterial', related_name='wall_materials', on_delete=models.CASCADE, verbose_name=_(u'Материал стен'))
     street = models.ForeignKey('Street', blank=True, default=None, null=True, related_name='streets', on_delete=models.CASCADE, verbose_name=_('Улица'))
     house = models.CharField(max_length=30, verbose_name=_(u'Дом'))
-    developer = models.ForeignKey('Developer', related_name='developers', on_delete=models.CASCADE,
+    developer = models.ForeignKey('Developer', default=None, null=True, blank=True, related_name='developers', on_delete=models.CASCADE,
                                   verbose_name=_(u'Застройщик'))
     year_of_completion = models.IntegerField(default=None, null=True, blank=True, verbose_name=_(u'Год (сдача)'))
     quarter = models.CharField(max_length=30,
@@ -222,7 +218,11 @@ class House(models.Model):
         verbose_name_plural = _(u'дома')
 
     def __str__(self):
-        if self.street:
+        if self.street and self.developer:
             return '%s, %s, %s, %s' % (self.developer.name, self.street.district.name, self.street.name, self.house)
-        else:
+        elif self.developer:
             return '%s, %s, %s' % (self.developer.name, self.residential_complex.name, self.house)
+        elif self.street:
+            return '%s, %s, %s' % (self.street.district.name, self.street.name, self.house)
+        else:
+            return '%s, %s' % (self.residential_complex.name, self.house)
