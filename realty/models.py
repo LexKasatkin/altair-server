@@ -157,7 +157,14 @@ class Flat(models.Model):
         verbose_name_plural = _(u'квартиры')
 
     def __str__(self):
-        return '%s %d кв.м. %s %s, кв.%s' % (self.house.developer.name, self.square, self.house.street.name, self.house.house, self.flat)
+        if self.flat and self.house.street:
+            return '%s %d кв.м. %s %s, кв.%s' % (self.house.developer.name, self.square, self.house.street.name, self.house.house, self.flat)
+        elif self.flat:
+            return '%s %d кв.м. %s %s, кв.%s' % (self.house.developer.name, self.square, self.house.residential_complex.name, self.house.house, self.flat)
+        elif self.house.street:
+            return '%s %d кв.м. %s %s' % (self.house.developer.name, self.square, self.house.street.name, self.house.house)
+        else:
+            return '%s %d кв.м. %s %s' % (self.house.developer.name, self.square, self.house.residential_complex.name, self.house.house)
 
 
 class Album(models.Model):
@@ -186,7 +193,7 @@ class House(models.Model):
 
     description = models.TextField(blank=True, verbose_name=_(u'Описание'))
     wall_material = models.ForeignKey('WallMaterial', related_name='wall_materials', on_delete=models.CASCADE, verbose_name=_(u'Материал стен'))
-    street = models.ForeignKey('Street', related_name='streets', on_delete=models.CASCADE, verbose_name=_('Улица'))
+    street = models.ForeignKey('Street', blank=True, default=None, null=True, related_name='streets', on_delete=models.CASCADE, verbose_name=_('Улица'))
     house = models.CharField(max_length=30, verbose_name=_(u'Дом'))
     developer = models.ForeignKey('Developer', related_name='developers', on_delete=models.CASCADE,
                                   verbose_name=_(u'Застройщик'))
@@ -215,4 +222,7 @@ class House(models.Model):
         verbose_name_plural = _(u'дома')
 
     def __str__(self):
-        return '%s, %s, %s, %s' % (self.developer.name, self.street.district.name, self.street.name, self.house)
+        if self.street:
+            return '%s, %s, %s, %s' % (self.developer.name, self.street.district.name, self.street.name, self.house)
+        else:
+            return '%s, %s, %s' % (self.developer.name, self.residential_complex.name, self.house)
