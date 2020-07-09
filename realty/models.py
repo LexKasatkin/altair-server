@@ -123,8 +123,8 @@ class Flat(models.Model):
                             default=SubjectsOfLawChoices.Entity,
                                       verbose_name=_(u'На кого оформлена'))
     description = models.TextField(blank=True, verbose_name=_(u'Описание'))
-    flat = models.IntegerField(blank=True, verbose_name=_(u'Квартира'))
-    floor = models.IntegerField(blank=True, verbose_name=_(u'Этаж'))
+    flat = models.IntegerField(default=None, null=True, blank=True, verbose_name=_(u'Квартира'))
+    floor = models.IntegerField(default=None, null=True, blank=True, verbose_name=_(u'Этаж'))
     flat_type = models.ForeignKey('FlatType', related_name='flat_types', on_delete=models.CASCADE, verbose_name=_(u'Тип квартиры (количество комнат)'))
     house = models.ForeignKey('House', related_name='houses', on_delete=models.CASCADE, verbose_name=_(u'Дом'))
     cost = models.IntegerField(verbose_name=_(u'Стоимость'))
@@ -153,7 +153,7 @@ class Flat(models.Model):
         verbose_name_plural = _(u'квартиры')
 
     def __str__(self):
-        return '%s %d кв.м. %s %s, кв.%d' % (self.house.developer.name, self.square, self.house.street.name, self.house.house, self.flat)
+        return '%s %d кв.м. %s %s, кв.%s' % (self.house.developer.name, self.square, self.house.street.name, self.house.house, self.flat)
 
 
 class Album(models.Model):
@@ -186,7 +186,7 @@ class House(models.Model):
     house = models.CharField(max_length=30, verbose_name=_(u'Дом'))
     developer = models.ForeignKey('Developer', related_name='developers', on_delete=models.CASCADE,
                                   verbose_name=_(u'Застройщик'))
-    year_of_completion = models.IntegerField(blank=True, verbose_name=_(u'Год (сдача)'))
+    year_of_completion = models.IntegerField(default=None, null=True, blank=True, verbose_name=_(u'Год (сдача)'))
     quarter = models.CharField(max_length=30,
                                choices=QuarterChoices.choices,
                                default=QuarterChoices.FirstQuarter, blank=True, verbose_name=_(u'Квартал (сдача)'))
@@ -202,8 +202,8 @@ class House(models.Model):
                                           format='JPEG',
                                           options={'quality': 60})
     realty_type = models.ForeignKey('RealtyType', related_name='realty_types', on_delete=models.CASCADE, verbose_name=_(u'Тип недвижимости (вторичная, новостройка и т.д.)'))
-    latitude = models.FloatField(blank=True, verbose_name=_(u'Долгота'))
-    longitude = models.FloatField(blank=True, verbose_name=_(u'Широта'))
+    latitude = models.FloatField(default=None, null=True, blank=True, verbose_name=_(u'Долгота'))
+    longitude = models.FloatField(default=None, null=True, blank=True, verbose_name=_(u'Широта'))
     contain_flats = models.BooleanField(blank=True, default=True, verbose_name=_(u'Многоквартирный дом'))
 
     class Meta:
