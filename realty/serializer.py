@@ -3,6 +3,7 @@ from .models import Album, Street, District, Flat, City, House
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
 
+
 class CitySerializer(serializers.ModelSerializer):
     class Meta:
         model = City
@@ -11,6 +12,7 @@ class CitySerializer(serializers.ModelSerializer):
 
 class DistrictSerializer(serializers.ModelSerializer):
     city = CitySerializer(read_only=True)
+
     class Meta:
         model = District
         fields = '__all__'
@@ -38,6 +40,7 @@ class RealtyTypeSerializer(serializers.Serializer):
 
 class StreetSerializer(serializers.ModelSerializer):
     district = DistrictSerializer(read_only=True)
+
     class Meta:
         model = Street
         fields = '__all__'
@@ -75,6 +78,7 @@ class FlatSerializer(serializers.ModelSerializer):
     main_image = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=False)
     main_image_big = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=False)
     main_image_thumbnail = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=False)
+    cost_square = serializers.CharField(source='get_cost_square')
     house_id = serializers.IntegerField(read_only=True, source='house.id')
     city = serializers.CharField(read_only=True, source='house.street.district.city.name')
     district = serializers.CharField(read_only=True, source='house.street.district.name')
@@ -88,7 +92,7 @@ class FlatSerializer(serializers.ModelSerializer):
     quarter = serializers.CharField(read_only=True, source='house.quarter')
     latitude = serializers.FloatField(read_only=True, source='house.latitude')
     longitude = serializers.FloatField(read_only=True, source='house.longitude')
-    
+
     class Meta:
         model = Flat
         fields = '__all__'
@@ -108,12 +112,16 @@ class FlatDetailsSerializer(serializers.ModelSerializer):
     street = serializers.CharField(read_only=True, source='house.street.name')
     house = serializers.CharField(read_only=True, source='house.house')
     flat = serializers.IntegerField(read_only=True)
+    cost_square = serializers.CharField(source='get_cost_square')
     wall_material = serializers.CharField(read_only=True, source='house.wall_material')
     developer = serializers.CharField(read_only=True, source='house.developer')
     residential_complex = serializers.CharField(read_only=True, source='house.residential_complex')
-    house_main_image = serializers.ImageField(read_only=True, source='house.main_image', allow_empty_file=True, use_url=False)
-    house_main_image_big = serializers.ImageField(read_only=True, source='house.main_image_big', allow_empty_file=True, use_url=False)
-    house_main_image_thumbnail = serializers.ImageField(read_only=True, source='house.main_image_thumbnail', allow_empty_file=True, use_url=False)
+    house_main_image = serializers.ImageField(read_only=True, source='house.main_image', allow_empty_file=True,
+                                              use_url=False)
+    house_main_image_big = serializers.ImageField(read_only=True, source='house.main_image_big', allow_empty_file=True,
+                                                  use_url=False)
+    house_main_image_thumbnail = serializers.ImageField(read_only=True, source='house.main_image_thumbnail',
+                                                        allow_empty_file=True, use_url=False)
     max_floor = serializers.CharField(read_only=True, source='house.max_floor')
     year_of_completion = serializers.IntegerField(read_only=True, source='house.year_of_completion')
     quarter = serializers.CharField(read_only=True, source='house.quarter')
@@ -128,7 +136,6 @@ class FlatDetailsSerializer(serializers.ModelSerializer):
 class AlbumSerializer(serializers.ModelSerializer):
     image = ImageSerializer(read_only=True)
     flat = FlatSerializer(read_only=True)
-
 
     class Meta:
         model = Album
