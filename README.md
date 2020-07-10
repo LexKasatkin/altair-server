@@ -21,3 +21,8 @@ python manage.py makemigrations
 python manage.py migrate
 
 python manage.py createsuperuser
+
+#Dump database
+
+pg_dump -Fc realty > database.dump
+pg_restore -C -d realty database.dump
