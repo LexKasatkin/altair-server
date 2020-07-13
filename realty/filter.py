@@ -42,6 +42,7 @@ class FlatFilter(filters.FilterSet):
     square = filters.RangeFilter()
     developer = NumberInFilter(field_name='house__developer', lookup_expr='in')
     wall_material = NumberInFilter(field_name='house__wall_material', lookup_expr='in')
+    residential_complex = NumberInFilter(field_name='house__residential_complex', lookup_expr='in')
     street = NumberInFilter(field_name='house__street', lookup_expr='in')
     flat_type = NumberInFilter(field_name='flat_type', lookup_expr='in')
     district = NumberInFilter(field_name='house__street__district', lookup_expr='in')
