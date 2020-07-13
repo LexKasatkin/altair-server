@@ -71,7 +71,9 @@ class HouseSerializer(serializers.ModelSerializer):
 
 
 class FlatSerializer(serializers.ModelSerializer):
-    flat_type = serializers.CharField(read_only=True, source='flat_type.name')
+    flat_type = serializers.CharField(read_only=True, source='flat_type.label')
+    flat_type_name = serializers.CharField(read_only=True, source='flat_type.name')
+    studio = serializers.BooleanField(read_only=True)
     layout = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=False)
     layout_thumbnail = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=False)
     layout_big = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=False)
@@ -99,7 +101,7 @@ class FlatSerializer(serializers.ModelSerializer):
 
 
 class FlatDetailsSerializer(serializers.ModelSerializer):
-    flat_type = serializers.CharField(read_only=True, source='flat_type.label')
+    flat_type_name = serializers.CharField(read_only=True, source='flat_type.name')
     studio = serializers.BooleanField(read_only=True)
     layout = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=False)
     layout_thumbnail = serializers.ImageField(max_length=None, allow_empty_file=True, use_url=False)
