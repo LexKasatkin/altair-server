@@ -18,9 +18,10 @@ class DistrictSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class FlatTypeSerializer(serializers.Serializer):
-    id = serializers.IntegerField(label='ID', read_only=True)
-    name = serializers.CharField(max_length=60)
+class FlatTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Flat
+        fields = '__all__'
 
 
 class DeveloperSerializer(serializers.Serializer):
