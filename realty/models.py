@@ -43,6 +43,7 @@ class District(models.Model):
 
 class FlatType(models.Model):
     name = models.CharField(max_length=60, verbose_name=_(u'Название'))
+    label = models.CharField(max_length=15, verbose_name=_(u'Метка (отображение)'), default='1')
 
     class Meta:
         verbose_name = _(u'тип квартиры (количество комнат)')
@@ -126,6 +127,7 @@ class Flat(models.Model):
     flat = models.IntegerField(default=None, null=True, blank=True, verbose_name=_(u'Квартира'))
     floor = models.IntegerField(default=None, null=True, blank=True, verbose_name=_(u'Этаж'))
     flat_type = models.ForeignKey('FlatType', related_name='flat_types', on_delete=models.CASCADE, verbose_name=_(u'Тип квартиры (количество комнат)'))
+    studio = models.BooleanField(verbose_name=_(u'Студия'), default=False)
     house = models.ForeignKey('House', related_name='houses', on_delete=models.CASCADE, verbose_name=_(u'Дом'))
     cost = models.IntegerField(verbose_name=_(u'Стоимость'))
     square = models.FloatField(verbose_name=_(u'Площадь'))
