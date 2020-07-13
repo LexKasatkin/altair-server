@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Album, Street, District, Flat, City, House
+from .models import Album, Street, District, Flat, City, House, FlatType
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
 
@@ -20,7 +20,7 @@ class DistrictSerializer(serializers.ModelSerializer):
 
 class FlatTypeSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Flat
+        model = FlatType
         fields = '__all__'
 
 
